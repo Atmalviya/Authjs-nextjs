@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -39,8 +38,8 @@ export const LoginForm = () => {
     startTransition(() => {
       login(values) 
         .then((data)=> {
-            setSuccess(data.success)
-            setError(data.error)
+            setSuccess(data?.success)
+            setError(data?.error)
         })
     })
   }
