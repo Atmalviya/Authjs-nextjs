@@ -17,6 +17,7 @@ import { LoginSchema } from "@/schemas";
 import { Button } from "../ui/button";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
+import { FormWarning } from "../form-warning";
 import { login } from "@/actions/login";
 import { useTransition } from "react";
 import { useSearchParams } from "next/navigation";
@@ -26,6 +27,7 @@ export const LoginForm = () => {
   const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email is alredy in use with different provider" : "";
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
+  const [warning, setWarning] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -41,8 +43,9 @@ export const LoginForm = () => {
     startTransition(() => {
       login(values) 
         .then((data)=> {
-            // setSuccess(data?.success)
+            setSuccess(data?.success)
             setError(data?.error)
+            setWarning(data?.warning)
         })
     })
   }
@@ -87,6 +90,7 @@ export const LoginForm = () => {
             />
             <FormError message={error || urlError} />
             <FormSuccess message={success}/>
+            <FormWarning message={warning}/>
             <Button type="submit" className="w-full" disabled={isPending}>Login</Button>
           </div>
         </form>
