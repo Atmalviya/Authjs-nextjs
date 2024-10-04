@@ -14,3 +14,7 @@ export const  RegisterSchema = Z.object({
 export const  ResetSchema = Z.object({
     email: Z.string().email({ message: 'Please enter a valid email' }),
 });
+
+export const  NewPasswordSchema = Z.object({
+    password: Z.string().min(4, { message: 'Password must be 4 char long' }),
+});
